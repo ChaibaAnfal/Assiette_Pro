@@ -11,7 +11,8 @@ import com.example.assiette_pto.R
 import com.example.assiette_pto.responses.Category
 import com.squareup.picasso.Picasso
 
-class CategoryAdapter(private var categories: List<Category>) :
+class CategoryAdapter(private var categories: List<Category>,
+                      private val onCategoryClick: (String) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,6 +29,10 @@ class CategoryAdapter(private var categories: List<Category>) :
         val category = categories[position]
         holder.categoryName.text = category.name
         Picasso.get().load(category.thumbnail).into(holder.categoryImage)
+
+        holder.itemView.setOnClickListener {
+            onCategoryClick(category.name) // Pass the category name to the click listener
+        }
     }
 
     override fun getItemCount(): Int = categories.size

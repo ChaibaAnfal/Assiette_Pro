@@ -28,7 +28,7 @@ class DashboardViewModel : ViewModel() {
     }
 
     // Fetch categories from API
-    private fun fetchCategories() {
+    fun fetchCategories() {
         val call = ApiClient.mealApi.getCategories()
 
         call.enqueue(object : Callback<CategoryResponse> {
