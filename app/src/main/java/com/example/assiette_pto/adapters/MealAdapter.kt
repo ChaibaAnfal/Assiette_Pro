@@ -1,5 +1,6 @@
 package com.example.assiette_pto.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class MealAdapter(
     override fun getItemCount(): Int = meals.size
 
     // Update the data in the adapter dynamically
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newMeals: List<Meal>) {
         meals = newMeals
         notifyDataSetChanged()
