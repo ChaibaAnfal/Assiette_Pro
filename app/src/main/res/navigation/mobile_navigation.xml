@@ -27,6 +27,16 @@
         android:label="Meals" />
 
     <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="com.example.assiette_pto.ui.meal.MealDetailFragment"
+        android:label="Meal Details">
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.assiette_pto.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
