@@ -13,7 +13,6 @@
             android:id="@+id/ivMealImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:contentDescription="@string/app_name"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -24,18 +23,38 @@
             android:textStyle="bold"
             android:paddingTop="8dp" />
 
+        <!-- Instructions Title -->
+        <TextView
+            android:id="@+id/tvInstructionsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:text="@string/instructions"
+            android:textSize="18sp" />
+
+        <!-- Instructions Content -->
         <TextView
             android:id="@+id/tvInstructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="@string/instructions" />
+            android:paddingTop="8dp" />
 
+        <!-- Ingredients Title -->
+        <TextView
+            android:id="@+id/tvIngredientsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:text="@string/ingredients"
+            android:textSize="18sp" />
+
+        <!-- Ingredients Content -->
         <TextView
             android:id="@+id/tvIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="@string/ingredients" />
+            android:paddingTop="8dp" />
     </LinearLayout>
 </ScrollView>
