@@ -8,7 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.assiette_pto.databinding.FragmentMealDetailBinding
 import com.example.assiette_pto.api_parameters.ApiClient
-import com.example.assiette_pto.responses.*
+import com.example.assiette_pto.responses.Meal
+import com.example.assiette_pto.responses.MealResponse
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,10 +44,13 @@ class MealDetailFragment : Fragment() {
                     if (meal != null) {
                         // Set meal details
                         binding.tvMealName.text = meal.name
-                        binding.tvInstructions.text = meal.instructions
                         Picasso.get().load(meal.thumbnail).into(binding.ivMealImage)
 
-                        // Extract and display ingredients
+                        // Add titles for Instructions and Ingredients
+                        binding.tvInstructionsTitle.text = "Instructions"
+                        binding.tvInstructions.text = meal.instructions
+
+                        binding.tvIngredientsTitle.text = "Ingredients"
                         val ingredients = getIngredients(meal)
                         binding.tvIngredients.text = ingredients.joinToString("\n")
                     } else {
@@ -66,26 +70,27 @@ class MealDetailFragment : Fragment() {
     private fun getIngredients(meal: Meal): List<String> {
         val ingredients = mutableListOf<String>()
 
+        // Dynamically add non-null ingredients and measurements
         if (!meal.ingredient1.isNullOrEmpty()) ingredients.add("${meal.measure1} ${meal.ingredient1}")
         if (!meal.ingredient2.isNullOrEmpty()) ingredients.add("${meal.measure2} ${meal.ingredient2}")
         if (!meal.ingredient3.isNullOrEmpty()) ingredients.add("${meal.measure3} ${meal.ingredient3}")
         if (!meal.ingredient4.isNullOrEmpty()) ingredients.add("${meal.measure4} ${meal.ingredient4}")
         if (!meal.ingredient5.isNullOrEmpty()) ingredients.add("${meal.measure5} ${meal.ingredient5}")
         if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure6} ${meal.ingredient6}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure7} ${meal.ingredient7}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure8} ${meal.ingredient8}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure9} ${meal.ingredient9}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure10} ${meal.ingredient10}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure11} ${meal.ingredient11}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure12} ${meal.ingredient12}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure13} ${meal.ingredient13}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure14} ${meal.ingredient14}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure15} ${meal.ingredient15}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure16} ${meal.ingredient16}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure17} ${meal.ingredient17}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure18} ${meal.ingredient18}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure19} ${meal.ingredient19}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure20} ${meal.ingredient20}")
+        if (!meal.ingredient7.isNullOrEmpty()) ingredients.add("${meal.measure7} ${meal.ingredient7}")
+        if (!meal.ingredient8.isNullOrEmpty()) ingredients.add("${meal.measure8} ${meal.ingredient8}")
+        if (!meal.ingredient9.isNullOrEmpty()) ingredients.add("${meal.measure9} ${meal.ingredient9}")
+        if (!meal.ingredient10.isNullOrEmpty()) ingredients.add("${meal.measure10} ${meal.ingredient10}")
+        if (!meal.ingredient11.isNullOrEmpty()) ingredients.add("${meal.measure11} ${meal.ingredient11}")
+        if (!meal.ingredient12.isNullOrEmpty()) ingredients.add("${meal.measure12} ${meal.ingredient12}")
+        if (!meal.ingredient13.isNullOrEmpty()) ingredients.add("${meal.measure13} ${meal.ingredient13}")
+        if (!meal.ingredient14.isNullOrEmpty()) ingredients.add("${meal.measure14} ${meal.ingredient14}")
+        if (!meal.ingredient15.isNullOrEmpty()) ingredients.add("${meal.measure15} ${meal.ingredient15}")
+        if (!meal.ingredient16.isNullOrEmpty()) ingredients.add("${meal.measure16} ${meal.ingredient16}")
+        if (!meal.ingredient17.isNullOrEmpty()) ingredients.add("${meal.measure17} ${meal.ingredient17}")
+        if (!meal.ingredient18.isNullOrEmpty()) ingredients.add("${meal.measure18} ${meal.ingredient18}")
+        if (!meal.ingredient19.isNullOrEmpty()) ingredients.add("${meal.measure19} ${meal.ingredient19}")
+        if (!meal.ingredient20.isNullOrEmpty()) ingredients.add("${meal.measure20} ${meal.ingredient20}")
 
         return ingredients
     }

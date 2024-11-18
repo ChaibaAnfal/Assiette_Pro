@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.assiette_pto.adapters.CategoryAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.assiette_pto.R
+import com.example.assiette_pto.adapters.CategoryAdapter
 import com.example.assiette_pto.databinding.FragmentDashboardBinding
+import com.example.assiette_pto.utils.ItemOffsetDecoration
 
 class DashboardFragment : Fragment() {
 
@@ -29,9 +30,12 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Initialize RecyclerView
+        // Initialize RecyclerView with GridLayoutManager for a grid-style layout
         val rvCategories = binding.rvCategories
-        rvCategories.layoutManager = LinearLayoutManager(requireContext())
+        rvCategories.layoutManager = GridLayoutManager(requireContext(), 2) // 2 columns
+        rvCategories.addItemDecoration(
+            ItemOffsetDecoration(requireContext(), R.dimen.recycler_view_item_offset)
+        )
         categoryAdapter = CategoryAdapter(emptyList()) { categoryName ->
             // Create a bundle with the category name
             val bundle = Bundle().apply {
@@ -42,7 +46,7 @@ class DashboardFragment : Fragment() {
         }
         rvCategories.adapter = categoryAdapter
 
-        // Observe categories
+        // Observe categories from ViewModel
         dashboardViewModel.categories.observe(viewLifecycleOwner) { categories ->
             if (categories != null) {
                 categoryAdapter.updateData(categories)
@@ -54,6 +58,7 @@ class DashboardFragment : Fragment() {
 
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

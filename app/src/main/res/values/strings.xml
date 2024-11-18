@@ -2,8 +2,9 @@
     <string name="app_name">Assiette Pro</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Categories</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Favoris</string>
     <string name="meals">Meals</string>
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
+    <string name="category_image">img</string>
 </resources>
