@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.picasso)
     implementation (libs.navigation.fragment.ktx.v260)
     implementation (libs.androidx.navigation.ui.ktx.v260)
+    implementation (libs.picasso)
+
 
 
 
