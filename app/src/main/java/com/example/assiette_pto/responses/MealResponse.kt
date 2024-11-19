@@ -1,4 +1,5 @@
 package com.example.assiette_pto.responses
+
 import com.google.gson.annotations.SerializedName
 
 data class MealResponse(
@@ -8,54 +9,60 @@ data class MealResponse(
 
 data class Meal(
     @SerializedName("idMeal")
-    val id: String,
+    var id: String = "",
     @SerializedName("strMeal")
-    val name: String,
+    var name: String = "",
     @SerializedName("strMealThumb")
-    val thumbnail: String,
+    var thumbnail: String = "",
     @SerializedName("strInstructions")
-    val instructions: String,
+    var instructions: String = "",
     // Ingredients and measurements
-    @SerializedName("strIngredient1") val ingredient1: String?,
-    @SerializedName("strIngredient2") val ingredient2: String?,
-    @SerializedName("strIngredient3") val ingredient3: String?,
-    @SerializedName("strIngredient4") val ingredient4: String?,
-    @SerializedName("strIngredient5") val ingredient5: String?,
-    @SerializedName("strIngredient6") val ingredient6: String?,
-    @SerializedName("strIngredient7") val ingredient7: String?,
-    @SerializedName("strIngredient8") val ingredient8: String?,
-    @SerializedName("strIngredient9") val ingredient9: String?,
-    @SerializedName("strIngredient10") val ingredient10: String?,
-    @SerializedName("strIngredient11") val ingredient11: String?,
-    @SerializedName("strIngredient12") val ingredient12: String?,
-    @SerializedName("strIngredient13") val ingredient13: String?,
-    @SerializedName("strIngredient14") val ingredient14: String?,
-    @SerializedName("strIngredient15") val ingredient15: String?,
-    @SerializedName("strIngredient16") val ingredient16: String?,
-    @SerializedName("strIngredient17") val ingredient17: String?,
-    @SerializedName("strIngredient18") val ingredient18: String?,
-    @SerializedName("strIngredient19") val ingredient19: String?,
-    @SerializedName("strIngredient20") val ingredient20: String?,
-    @SerializedName("strMeasure1") val measure1: String?,
-    @SerializedName("strMeasure2") val measure2: String?,
-    @SerializedName("strMeasure3") val measure3: String?,
-    @SerializedName("strMeasure4") val measure4: String?,
-    @SerializedName("strMeasure5") val measure5: String?,
-    @SerializedName("strMeasure6") val measure6: String?,
-    @SerializedName("strMeasure7") val measure7: String?,
-    @SerializedName("strMeasure8") val measure8: String?,
-    @SerializedName("strMeasure9") val measure9: String?,
-    @SerializedName("strMeasure10") val measure10: String?,
-    @SerializedName("strMeasure11") val measure11: String?,
-    @SerializedName("strMeasure12") val measure12: String?,
-    @SerializedName("strMeasure13") val measure13: String?,
-    @SerializedName("strMeasure14") val measure14: String?,
-    @SerializedName("strMeasure15") val measure15: String?,
-    @SerializedName("strMeasure16") val measure16: String?,
-    @SerializedName("strMeasure17") val measure17: String?,
-    @SerializedName("strMeasure18") val measure18: String?,
-    @SerializedName("strMeasure19") val measure19: String?,
-    @SerializedName("strMeasure20") val measure20: String?,
-    val isFavorite: Boolean = false
-)
-
+    @SerializedName("strIngredient1") var ingredient1: String? = null,
+    @SerializedName("strIngredient2") var ingredient2: String? = null,
+    @SerializedName("strIngredient3") var ingredient3: String? = null,
+    @SerializedName("strIngredient4") var ingredient4: String? = null,
+    @SerializedName("strIngredient5") var ingredient5: String? = null,
+    @SerializedName("strIngredient6") var ingredient6: String? = null,
+    @SerializedName("strIngredient7") var ingredient7: String? = null,
+    @SerializedName("strIngredient8") var ingredient8: String? = null,
+    @SerializedName("strIngredient9") var ingredient9: String? = null,
+    @SerializedName("strIngredient10") var ingredient10: String? = null,
+    @SerializedName("strIngredient11") var ingredient11: String? = null,
+    @SerializedName("strIngredient12") var ingredient12: String? = null,
+    @SerializedName("strIngredient13") var ingredient13: String? = null,
+    @SerializedName("strIngredient14") var ingredient14: String? = null,
+    @SerializedName("strIngredient15") var ingredient15: String? = null,
+    @SerializedName("strIngredient16") var ingredient16: String? = null,
+    @SerializedName("strIngredient17") var ingredient17: String? = null,
+    @SerializedName("strIngredient18") var ingredient18: String? = null,
+    @SerializedName("strIngredient19") var ingredient19: String? = null,
+    @SerializedName("strIngredient20") var ingredient20: String? = null,
+    @SerializedName("strMeasure1") var measure1: String? = null,
+    @SerializedName("strMeasure2") var measure2: String? = null,
+    @SerializedName("strMeasure3") var measure3: String? = null,
+    @SerializedName("strMeasure4") var measure4: String? = null,
+    @SerializedName("strMeasure5") var measure5: String? = null,
+    @SerializedName("strMeasure6") var measure6: String? = null,
+    @SerializedName("strMeasure7") var measure7: String? = null,
+    @SerializedName("strMeasure8") var measure8: String? = null,
+    @SerializedName("strMeasure9") var measure9: String? = null,
+    @SerializedName("strMeasure10") var measure10: String? = null,
+    @SerializedName("strMeasure11") var measure11: String? = null,
+    @SerializedName("strMeasure12") var measure12: String? = null,
+    @SerializedName("strMeasure13") var measure13: String? = null,
+    @SerializedName("strMeasure14") var measure14: String? = null,
+    @SerializedName("strMeasure15") var measure15: String? = null,
+    @SerializedName("strMeasure16") var measure16: String? = null,
+    @SerializedName("strMeasure17") var measure17: String? = null,
+    @SerializedName("strMeasure18") var measure18: String? = null,
+    @SerializedName("strMeasure19") var measure19: String? = null,
+    @SerializedName("strMeasure20") var measure20: String? = null,
+    var isFavorite: Boolean = false
+) {
+    // Explicit no-argument constructor
+    constructor() : this("", "", "", "", null, null, null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null, null, null,null,null,
+        null , null,null , null,null, null,null,null,false
+    )
+}

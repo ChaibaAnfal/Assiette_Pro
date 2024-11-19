@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assiette_pto.R
 import com.example.assiette_pto.manager.FavoritesManager
-import com.example.assiette_pto.responses.*
+import com.example.assiette_pto.responses.Meal
 import com.squareup.picasso.Picasso
 
 class MealAdapter(
@@ -19,29 +19,36 @@ class MealAdapter(
 ) : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     inner class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val mealName: TextView = itemView.findViewById(R.id.tvMealName)
-        val mealThumbnail: ImageView = itemView.findViewById(R.id.ivMealThumbnail)
-        val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
+        private val mealName: TextView = itemView.findViewById(R.id.tvMealName)
+        private val mealThumbnail: ImageView = itemView.findViewById(R.id.ivMealThumbnail)
+        private val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
 
         fun bind(meal: Meal) {
             mealName.text = meal.name
             Picasso.get().load(meal.thumbnail).into(mealThumbnail)
 
-            // Update favorite icon
-            btnFavorite.setImageResource(
-                if (FavoritesManager.isFavorite(meal)) R.drawable.ic_favorite else R.drawable.ic_favorite_border
-            )
-
-            // Handle favorite icon click
-            btnFavorite.setOnClickListener {
-                if (FavoritesManager.isFavorite(meal)) {
-                    FavoritesManager.removeFavorite(meal)
-                } else {
-                    FavoritesManager.addFavorite(meal)
-                }
+            // Check if meal is favorite and update icon
+            FavoritesManager.isFavorite(meal) { isFavorite ->
                 btnFavorite.setImageResource(
-                    if (FavoritesManager.isFavorite(meal)) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+                    if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
                 )
+            }
+
+            // Handle favorite toggle
+            btnFavorite.setOnClickListener {
+                FavoritesManager.isFavorite(meal) { isFavorite ->
+                    if (isFavorite) {
+                        FavoritesManager.removeFavorite(meal)
+                    } else {
+                        FavoritesManager.addFavorite(meal)
+                    }
+                    // Update the icon
+                    FavoritesManager.isFavorite(meal) { updatedIsFavorite ->
+                        btnFavorite.setImageResource(
+                            if (updatedIsFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+                        )
+                    }
+                }
             }
 
             // Handle meal click
@@ -66,4 +73,3 @@ class MealAdapter(
         notifyDataSetChanged()
     }
 }
-

@@ -9,6 +9,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.assiette_pto.databinding.ActivityMainBinding
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
+        initializeFirebase()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -41,6 +48,16 @@ class MainActivity : AppCompatActivity() {
         // Set up BottomNavigationView with NavController
         val navView: BottomNavigationView = binding.navView
         navView.setupWithNavController(navController)
+    }
+
+    private fun initializeFirebase() {
+        try {
+            FirebaseApp.initializeApp(this)
+            FirebaseFirestore.getInstance() // Optional: Ensures Firestore is initialized
+            println("Firebase successfully initialized.")
+        } catch (e: Exception) {
+            println("Error initializing Firebase: ${e.message}")
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
