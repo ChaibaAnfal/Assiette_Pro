@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.assiette_pto.R
 import com.example.assiette_pto.adapters.MealAdapter
 import com.example.assiette_pto.api_parameters.ApiClient
 import com.example.assiette_pto.databinding.FragmentHomeBinding
+import com.example.assiette_pto.responses.Meal
 import com.example.assiette_pto.responses.MealResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +31,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -38,17 +38,12 @@ class HomeFragment : Fragment() {
         val rvMeals = binding.rvMeals
         rvMeals.layoutManager = LinearLayoutManager(requireContext())
         mealAdapter = MealAdapter(emptyList()) { meal ->
-            Toast.makeText(requireContext(), "Clicked: ${meal.name}", Toast.LENGTH_SHORT).show()
+            navigateToMealDetail(meal.id)
         }
         rvMeals.adapter = mealAdapter
 
         // Set up SearchView
         setupSearch()
-
-        // Observe text from ViewModel for demonstration
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            binding.tvTitle.text = it
-        }
 
         return root
     }
@@ -61,7 +56,6 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Optional: Handle live search here
                 return true
             }
         })
@@ -73,7 +67,7 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<MealResponse>, response: Response<MealResponse>) {
                 if (response.isSuccessful) {
                     val meals = response.body()?.meals
-                    if (meals != null && meals.isNotEmpty()) {
+                    if (!meals.isNullOrEmpty()) {
                         mealAdapter.updateData(meals)
                     } else {
                         Toast.makeText(requireContext(), "No meals found for \"$query\"", Toast.LENGTH_SHORT).show()
@@ -88,6 +82,15 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
+    private fun navigateToMealDetail(mealId: String) {
+        val bundle = Bundle().apply {
+            putString("mealId", mealId)
+        }
+        findNavController().navigate(R.id.action_homeFragment_to_mealDetailFragment, bundle)
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

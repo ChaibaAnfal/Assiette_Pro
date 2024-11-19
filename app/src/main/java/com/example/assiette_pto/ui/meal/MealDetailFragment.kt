@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.assiette_pto.databinding.FragmentMealDetailBinding
 import com.example.assiette_pto.api_parameters.ApiClient
+import com.example.assiette_pto.databinding.FragmentMealDetailBinding
 import com.example.assiette_pto.responses.Meal
 import com.example.assiette_pto.responses.MealResponse
 import com.squareup.picasso.Picasso
@@ -26,12 +26,16 @@ class MealDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMealDetailBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val mealId = requireArguments().getString("mealId") ?: return root
-        fetchMealDetails(mealId)
+        // Retrieve the mealId from arguments
+        val mealId = requireArguments().getString("mealId")
+        if (mealId != null) {
+            fetchMealDetails(mealId)
+        } else {
+            Toast.makeText(requireContext(), "Meal ID not found", Toast.LENGTH_SHORT).show()
+        }
 
-        return root
+        return binding.root
     }
 
     private fun fetchMealDetails(mealId: String) {
@@ -42,22 +46,12 @@ class MealDetailFragment : Fragment() {
                 if (response.isSuccessful) {
                     val meal = response.body()?.meals?.firstOrNull()
                     if (meal != null) {
-                        // Set meal details
-                        binding.tvMealName.text = meal.name
-                        Picasso.get().load(meal.thumbnail).into(binding.ivMealImage)
-
-                        // Add titles for Instructions and Ingredients
-                        binding.tvInstructionsTitle.text = "Instructions"
-                        binding.tvInstructions.text = meal.instructions
-
-                        binding.tvIngredientsTitle.text = "Ingredients"
-                        val ingredients = getIngredients(meal)
-                        binding.tvIngredients.text = ingredients.joinToString("\n")
+                        displayMealDetails(meal)
                     } else {
-                        Toast.makeText(requireContext(), "Meal details not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Meal details not available", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Failed to load meal details", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to fetch meal details", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -67,33 +61,51 @@ class MealDetailFragment : Fragment() {
         })
     }
 
+    private fun displayMealDetails(meal: Meal) {
+        // Set meal name
+        binding.tvMealName.text = meal.name
+
+        // Load meal image using Picasso
+        Picasso.get().load(meal.thumbnail).into(binding.ivMealImage)
+
+        // Set instructions with a title
+        binding.tvInstructionsTitle.text = "Instructions"
+        binding.tvInstructions.text = meal.instructions
+
+        // Set ingredients with a title
+        binding.tvIngredientsTitle.text = "Ingredients"
+        val ingredients = getIngredients(meal)
+        binding.tvIngredients.text = if (ingredients.isNotEmpty()) {
+            ingredients.joinToString("\n")
+        } else {
+            "No ingredients available"
+        }
+    }
+
     private fun getIngredients(meal: Meal): List<String> {
         val ingredients = mutableListOf<String>()
+        for (i in 1..20) {
+            try {
+                val ingredientField = meal::class.java.getDeclaredField("ingredient$i")
+                val measureField = meal::class.java.getDeclaredField("measure$i")
 
-        // Dynamically add non-null ingredients and measurements
-        if (!meal.ingredient1.isNullOrEmpty()) ingredients.add("${meal.measure1} ${meal.ingredient1}")
-        if (!meal.ingredient2.isNullOrEmpty()) ingredients.add("${meal.measure2} ${meal.ingredient2}")
-        if (!meal.ingredient3.isNullOrEmpty()) ingredients.add("${meal.measure3} ${meal.ingredient3}")
-        if (!meal.ingredient4.isNullOrEmpty()) ingredients.add("${meal.measure4} ${meal.ingredient4}")
-        if (!meal.ingredient5.isNullOrEmpty()) ingredients.add("${meal.measure5} ${meal.ingredient5}")
-        if (!meal.ingredient6.isNullOrEmpty()) ingredients.add("${meal.measure6} ${meal.ingredient6}")
-        if (!meal.ingredient7.isNullOrEmpty()) ingredients.add("${meal.measure7} ${meal.ingredient7}")
-        if (!meal.ingredient8.isNullOrEmpty()) ingredients.add("${meal.measure8} ${meal.ingredient8}")
-        if (!meal.ingredient9.isNullOrEmpty()) ingredients.add("${meal.measure9} ${meal.ingredient9}")
-        if (!meal.ingredient10.isNullOrEmpty()) ingredients.add("${meal.measure10} ${meal.ingredient10}")
-        if (!meal.ingredient11.isNullOrEmpty()) ingredients.add("${meal.measure11} ${meal.ingredient11}")
-        if (!meal.ingredient12.isNullOrEmpty()) ingredients.add("${meal.measure12} ${meal.ingredient12}")
-        if (!meal.ingredient13.isNullOrEmpty()) ingredients.add("${meal.measure13} ${meal.ingredient13}")
-        if (!meal.ingredient14.isNullOrEmpty()) ingredients.add("${meal.measure14} ${meal.ingredient14}")
-        if (!meal.ingredient15.isNullOrEmpty()) ingredients.add("${meal.measure15} ${meal.ingredient15}")
-        if (!meal.ingredient16.isNullOrEmpty()) ingredients.add("${meal.measure16} ${meal.ingredient16}")
-        if (!meal.ingredient17.isNullOrEmpty()) ingredients.add("${meal.measure17} ${meal.ingredient17}")
-        if (!meal.ingredient18.isNullOrEmpty()) ingredients.add("${meal.measure18} ${meal.ingredient18}")
-        if (!meal.ingredient19.isNullOrEmpty()) ingredients.add("${meal.measure19} ${meal.ingredient19}")
-        if (!meal.ingredient20.isNullOrEmpty()) ingredients.add("${meal.measure20} ${meal.ingredient20}")
+                // Make the fields accessible
+                ingredientField.isAccessible = true
+                measureField.isAccessible = true
 
+                val ingredient = ingredientField.get(meal) as? String
+                val measure = measureField.get(meal) as? String
+
+                if (!ingredient.isNullOrEmpty() && !measure.isNullOrEmpty()) {
+                    ingredients.add("$measure $ingredient")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
         return ingredients
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

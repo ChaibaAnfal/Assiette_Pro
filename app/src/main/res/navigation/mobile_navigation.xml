@@ -2,40 +2,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_home">
 
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.assiette_pto.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
 
+    <!-- Dashboard Fragment -->
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.assiette_pto.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard">
-        <!-- Define action to navigate to MealListFragment -->
         <action
             android:id="@+id/action_dashboardFragment_to_mealListFragment"
             app:destination="@id/mealListFragment" />
     </fragment>
 
+    <!-- Meal List Fragment -->
     <fragment
         android:id="@+id/mealListFragment"
         android:name="com.example.assiette_pto.ui.meal.MealListFragment"
-        android:label="Meals" />
+        android:label="Meals"
+        tools:layout="@layout/fragment_meal_list" />
 
+    <!-- Meal Detail Fragment -->
     <fragment
         android:id="@+id/mealDetailFragment"
         android:name="com.example.assiette_pto.ui.meal.MealDetailFragment"
-        android:label="Meal Details">
-        <argument
-            android:name="mealId"
-            app:argType="string" />
-    </fragment>
+        android:label="Meal Detail"
+        tools:layout="@layout/fragment_meal_detail" />
 
-
+    <!-- Notifications Fragment -->
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.assiette_pto.ui.notifications.NotificationsFragment"
