@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 
 class MealAdapter(
     private var meals: List<Meal>,
-    private val onMealClick: (Meal) -> Unit
+    private val onMealClick: (Meal) -> Unit // Listener for navigating to meal details
 ) : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     inner class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,14 +27,14 @@ class MealAdapter(
             mealName.text = meal.name
             Picasso.get().load(meal.thumbnail).into(mealThumbnail)
 
-            // Check if meal is favorite and update icon
+            // Check favorite status asynchronously and update the icon
             FavoritesManager.isFavorite(meal) { isFavorite ->
                 btnFavorite.setImageResource(
                     if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
                 )
             }
 
-            // Handle favorite toggle
+            // Handle click for toggling favorite status
             btnFavorite.setOnClickListener {
                 FavoritesManager.isFavorite(meal) { isFavorite ->
                     if (isFavorite) {
@@ -42,7 +42,7 @@ class MealAdapter(
                     } else {
                         FavoritesManager.addFavorite(meal)
                     }
-                    // Update the icon
+                    // Update the icon after changing the favorite status
                     FavoritesManager.isFavorite(meal) { updatedIsFavorite ->
                         btnFavorite.setImageResource(
                             if (updatedIsFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
@@ -51,7 +51,7 @@ class MealAdapter(
                 }
             }
 
-            // Handle meal click
+            // Handle click for navigating to meal details
             itemView.setOnClickListener { onMealClick(meal) }
         }
     }

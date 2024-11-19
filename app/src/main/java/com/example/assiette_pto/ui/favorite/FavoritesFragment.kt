@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.assiette_pto.adapters.MealAdapter
 import com.example.assiette_pto.databinding.FragmentFavoritesBinding
@@ -27,7 +28,14 @@ class FavoritesFragment : Fragment() {
 
         // Initialize RecyclerView
         mealAdapter = MealAdapter(emptyList()) { meal ->
-            // Handle meal click (e.g., navigate to details)
+            // Navigate to MealDetailFragment with meal ID
+            val bundle = Bundle().apply {
+                putString("mealId", meal.id)
+            }
+            findNavController().navigate(
+                com.example.assiette_pto.R.id.action_navigation_favorites_to_mealDetailFragment,
+                bundle
+            )
         }
         binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
         binding.rvFavorites.adapter = mealAdapter
