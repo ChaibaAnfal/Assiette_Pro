@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "977636724137",
+    "project_id": "assiettepro",
+    "storage_bucket": "assiettepro.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977636724137:android:d0ecfdb9030c3f32e788b8",
+        "android_client_info": {
+          "package_name": "com.example.assiette_pto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWqA5Sy18QPJfH6cXJzHJBOBoWdSr_FEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
