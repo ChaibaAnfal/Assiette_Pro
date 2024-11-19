@@ -55,6 +55,7 @@ data class Meal(
     @SerializedName("strMeasure17") val measure17: String?,
     @SerializedName("strMeasure18") val measure18: String?,
     @SerializedName("strMeasure19") val measure19: String?,
-    @SerializedName("strMeasure20") val measure20: String?
+    @SerializedName("strMeasure20") val measure20: String?,
+    val isFavorite: Boolean = false
 )
 

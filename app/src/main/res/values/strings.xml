@@ -7,4 +7,6 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="category_image">img</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="favorites">Favorites</string>
 </resources>
