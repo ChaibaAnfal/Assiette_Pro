@@ -1,5 +1,6 @@
 package com.example.assiette_pto.ui.meal
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class MealDetailFragment : Fragment() {
 
         // Retrieve the mealId from arguments
         val mealId = requireArguments().getString("mealId")
-        if (mealId != null) {
+        if (!mealId.isNullOrEmpty()) {
             fetchMealDetails(mealId)
         } else {
             Toast.makeText(requireContext(), "Meal ID not found", Toast.LENGTH_SHORT).show()
@@ -61,6 +62,7 @@ class MealDetailFragment : Fragment() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayMealDetails(meal: Meal) {
         // Set meal name
         binding.tvMealName.text = meal.name
@@ -68,11 +70,11 @@ class MealDetailFragment : Fragment() {
         // Load meal image using Picasso
         Picasso.get().load(meal.thumbnail).into(binding.ivMealImage)
 
-        // Set instructions with a title
+        // Set instructions
         binding.tvInstructionsTitle.text = "Instructions"
         binding.tvInstructions.text = meal.instructions
 
-        // Set ingredients with a title
+        // Set ingredients
         binding.tvIngredientsTitle.text = "Ingredients"
         val ingredients = getIngredients(meal)
         binding.tvIngredients.text = if (ingredients.isNotEmpty()) {
@@ -105,7 +107,6 @@ class MealDetailFragment : Fragment() {
         }
         return ingredients
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
