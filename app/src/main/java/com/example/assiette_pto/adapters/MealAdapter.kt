@@ -19,9 +19,12 @@ class MealAdapter(
 ) : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     inner class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private val mealName: TextView = itemView.findViewById(R.id.tvMealName)
         private val mealThumbnail: ImageView = itemView.findViewById(R.id.ivMealThumbnail)
         private val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
+        val mealName: TextView = itemView.findViewById(R.id.tvMealName)
+        val mealThumbnail: ImageView = itemView.findViewById(R.id.ivMealImage)
 
         fun bind(meal: Meal) {
             mealName.text = meal.name
@@ -51,7 +54,6 @@ class MealAdapter(
                 }
             }
 
-            // Handle meal click
             itemView.setOnClickListener { onMealClick(meal) }
         }
     }

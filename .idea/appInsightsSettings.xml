@@ -8,6 +8,7 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
+
                   <option name="appId" value="com.example.assiette_pto" />
                   <option name="mobileSdkAppId" value="1:977636724137:android:d0ecfdb9030c3f32e788b8" />
                   <option name="projectId" value="assiettepro" />

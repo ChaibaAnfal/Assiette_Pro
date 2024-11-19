@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Initialize Firebase
         FirebaseApp.initializeApp(this)
         initializeFirebase()
@@ -29,8 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         // Set up the Toolbar as the ActionBar
         setSupportActionBar(binding.toolbar)
-
-        // Initialize NavController
+       
+      // Initialize NavController
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             println("Error initializing Firebase: ${e.message}")
         }
     }
-
     override fun onSupportNavigateUp(): Boolean {
         // Handle back arrow functionality
         return navController.navigateUp() || super.onSupportNavigateUp()
