@@ -13,6 +13,10 @@ object FavoritesManager {
     }
 
     fun addFavorite(meal: Meal) {
+        if (meal.id.isEmpty()) {
+            meal.id = favoritesCollection.document().id // Auto-generate a unique ID if it's missing
+        }
+
         favoritesCollection.document(meal.id).set(meal)
             .addOnSuccessListener {
                 Log.d("FavoritesManager", "Meal added to Firestore: ${meal.name}")
@@ -21,6 +25,7 @@ object FavoritesManager {
                 Log.e("FavoritesManager", "Failed to add meal to Firestore", e)
             }
     }
+
 
     fun removeFavorite(meal: Meal) {
         favoritesCollection.document(meal.id).delete()
@@ -33,12 +38,18 @@ object FavoritesManager {
     }
 
     fun isFavorite(meal: Meal, onResult: (Boolean) -> Unit) {
+        if (meal.id.isEmpty()) {
+            Log.e("FavoritesManager", "Meal ID is empty. Cannot check favorite status.")
+            onResult(false)
+            return
+        }
+
         favoritesCollection.document(meal.id).get()
             .addOnSuccessListener { document ->
-                onResult(document.exists())
+                onResult(document.exists()) // Si le document existe, c'est un favori
             }
             .addOnFailureListener { e ->
-                Log.e("FavoritesManager", "Failed to check favorite status", e)
+                Log.e("FavoritesManager", "Failed to check favorite status for meal ${meal.id}", e)
                 onResult(false)
             }
     }

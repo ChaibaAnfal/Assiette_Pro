@@ -14,7 +14,6 @@ import com.example.assiette_pto.R
 import com.example.assiette_pto.adapters.MealAdapter
 import com.example.assiette_pto.api_parameters.ApiClient
 import com.example.assiette_pto.databinding.FragmentHomeBinding
-import com.example.assiette_pto.responses.Meal
 import com.example.assiette_pto.responses.MealResponse
 import retrofit2.Call
 import retrofit2.Callback
