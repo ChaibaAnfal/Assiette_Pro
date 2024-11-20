@@ -16,5 +16,9 @@
         android:icon="@drawable/ic_favorite"
         android:title="@string/favorites" />
 
+    <item
+        android:id="@+id/navigation_user_meals"
+        android:icon="@drawable/ic_user_meals"
+        android:title="@string/user_meals" />
 
 </menu>

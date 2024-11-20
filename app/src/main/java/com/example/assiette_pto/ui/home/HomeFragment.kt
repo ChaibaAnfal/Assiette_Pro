@@ -1,6 +1,7 @@
 package com.example.assiette_pto.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import com.example.assiette_pto.R
 import com.example.assiette_pto.adapters.MealAdapter
 import com.example.assiette_pto.api_parameters.ApiClient
 import com.example.assiette_pto.databinding.FragmentHomeBinding
-import com.example.assiette_pto.responses.Meal
 import com.example.assiette_pto.responses.MealResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,18 +34,27 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Set up RecyclerView
-        val rvMeals = binding.rvMeals
-        rvMeals.layoutManager = LinearLayoutManager(requireContext())
-        mealAdapter = MealAdapter(emptyList()) { meal ->
-            navigateToMealDetail(meal.id)
-        }
-        rvMeals.adapter = mealAdapter
-
-        // Set up SearchView
+        setupUI()
         setupSearch()
 
         return root
+    }
+
+    private fun setupUI() {
+        // Initialize RecyclerView
+        mealAdapter = MealAdapter(emptyList()) { meal ->
+            navigateToMealDetail(meal.id)
+        }
+
+        binding.rvMeals.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = mealAdapter
+        }
+
+        // Set Add Recipe Button click listener
+        binding.btnAddRecipe.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_addRecipeFragment)
+        }
     }
 
     private fun setupSearch() {
@@ -68,6 +77,7 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val meals = response.body()?.meals
                     if (!meals.isNullOrEmpty()) {
+                        Log.d("HomeFragment", "Meals found: ${meals.size}")
                         mealAdapter.updateData(meals)
                     } else {
                         Toast.makeText(requireContext(), "No meals found for \"$query\"", Toast.LENGTH_SHORT).show()
@@ -79,6 +89,7 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<MealResponse>, t: Throwable) {
                 Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("HomeFragment", "API Error: ${t.message}")
             }
         })
     }
@@ -89,8 +100,6 @@ class HomeFragment : Fragment() {
         }
         findNavController().navigate(R.id.action_homeFragment_to_mealDetailFragment, bundle)
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
