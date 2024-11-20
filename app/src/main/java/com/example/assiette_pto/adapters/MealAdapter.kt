@@ -18,6 +18,7 @@ class MealAdapter(
     private val onMealClick: (Meal) -> Unit
 ) : RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
+    // ViewHolder class
     inner class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mealName: TextView = itemView.findViewById(R.id.tvMealName)
         private val mealThumbnail: ImageView = itemView.findViewById(R.id.ivMealThumbnail)
@@ -25,7 +26,18 @@ class MealAdapter(
 
         fun bind(meal: Meal) {
             mealName.text = meal.name
-            Picasso.get().load(meal.thumbnail).into(mealThumbnail)
+
+            // Check if the thumbnail is not empty or null
+            if (!meal.thumbnail.isNullOrEmpty()) {
+                Picasso.get()
+                    .load(meal.thumbnail)
+                    .placeholder(R.drawable.ic_placeholder) // Use a placeholder while loading
+                    .error(R.drawable.ic_placeholder)       // Use a placeholder if loading fails
+                    .into(mealThumbnail)
+            } else {
+                // Set a placeholder if the URL is empty or null
+                mealThumbnail.setImageResource(R.drawable.ic_placeholder)
+            }
 
             // Check if meal is favorite and update icon
             FavoritesManager.isFavorite(meal) { isFavorite ->
@@ -54,19 +66,24 @@ class MealAdapter(
             // Handle meal click
             itemView.setOnClickListener { onMealClick(meal) }
         }
+
     }
 
+    // Create ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_meal, parent, false)
         return MealViewHolder(view)
     }
 
+    // Bind data to ViewHolder
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         holder.bind(meals[position])
     }
 
+    // Return the size of the dataset
     override fun getItemCount(): Int = meals.size
 
+    // Update the dataset
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newMeals: List<Meal>) {
         meals = newMeals

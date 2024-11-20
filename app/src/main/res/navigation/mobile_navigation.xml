@@ -13,8 +13,15 @@
         <action
             android:id="@+id/action_homeFragment_to_mealDetailFragment"
             app:destination="@id/mealDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.example.assiette_pto.ui.recipe.AddRecipeFragment"
+        android:label="Add Recipe"
+        tools:layout="@layout/fragment_add_recipe" />
     <!-- Dashboard Fragment -->
     <fragment
         android:id="@+id/navigation_dashboard"
